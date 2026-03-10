@@ -19,7 +19,6 @@ html, body {
 	transform: translate(-50%, -50%);
 	background: transparent;
 	z-index: 2;
-	background-image: url('loading-bg.jpg');
 	background-size: cover;
 	background-position: center;
 }
