@@ -99,6 +99,7 @@
         var unityGameInstance = null;
         script.src = loaderUrl;
         script.onload = () => {
+            canvas.style.background = "transparent";
 
             createUnityInstance(canvas, config, (progress) => {
                 let pr = (progress * 3.2) * 100;
