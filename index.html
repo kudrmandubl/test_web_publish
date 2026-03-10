@@ -97,6 +97,29 @@
             });
         };
         document.body.appendChild(script);
+
+
+        var unityGameInstance = null;
+        // Setup the Unity section once zip file is downloaded and decompressed
+        function InitUnitySection() {
+            var script = document.createElement("script");
+            script.src = loaderUrl;
+            script.onload = () => {
+                createUnityInstance(canvas, config, (progress) => {
+                    progressBarFull.style.width = 100 * progress + "%";
+                }).then((unityInstance) => {
+                    unityGameInstance = unityInstance;
+                    loadingBar.style.display = "none";
+                }).catch((message) => {
+                    console.error(message);
+                });
+            };
+
+            document.body.appendChild(script);
+        }
+
+        InitUnitySection();
+
     </script>
 
 </body>
