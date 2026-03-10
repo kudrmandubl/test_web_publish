@@ -33,15 +33,15 @@
         const container = document.getElementById("unity-container");
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/FISH_WEB_6k_brotli.loader.js";
+        const loaderUrl = buildUrl + "/playables_test.loader.js";
         const config = {
-            dataUrl: buildUrl + "/FISH_WEB_6k_brotli.data.br",
-            frameworkUrl: buildUrl + "/FISH_WEB_6k_brotli.framework.js.br",
-            codeUrl: buildUrl + "/FISH_WEB_6k_brotli.wasm.br",
+            dataUrl: buildUrl + "/playables_test.data.br",
+            frameworkUrl: buildUrl + "/playables_test.framework.js.br",
+            codeUrl: buildUrl + "/playables_test.wasm.br",
             streamingAssetsUrl: "StreamingAssets",
-            companyName: "JoyBits",
-            productName: "Fish Story",
-            productVersion: "1.0.0"
+            companyName: "DefaultCompany",
+            productName: "playables_test",
+            productVersion: "1.0",
         };
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
