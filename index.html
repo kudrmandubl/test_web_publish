@@ -31,6 +31,8 @@
     <script>
         const canvas = document.getElementById("unity-canvas");
         const container = document.getElementById("unity-container");
+        var loadingBar = document.querySelector("#unity-loading-bar");
+        var progressBarFull = document.querySelector("#unity-progress-bar-full");
 
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/playables_test.loader.js";
