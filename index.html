@@ -96,6 +96,7 @@
         resizeCanvasToAspect();
 
         const script = document.createElement("script");
+        var unityGameInstance = null;
         script.src = loaderUrl;
         script.onload = () => {
             canvas.style.background = "transparent";
@@ -108,6 +109,7 @@
                 document.getElementById("loader-fill").style.width = pr + "%";
                 document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
             }).then((unityInstance) => {
+                unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("unity-container").style.backgroundImage = "none";
             }).catch((message) => {
@@ -115,28 +117,6 @@
             });
         };
         document.body.appendChild(script);
-
-
-        var unityGameInstance = null;
-        // Setup the Unity section once zip file is downloaded and decompressed
-        function InitUnitySection() {
-            var script = document.createElement("script");
-            script.src = loaderUrl;
-            script.onload = () => {
-                createUnityInstance(canvas, config, (progress) => {
-                    //progressBarFull.style.width = 100 * progress + "%";
-                }).then((unityInstance) => {
-                    unityGameInstance = unityInstance;
-                    //loadingBar.style.display = "none";
-                }).catch((message) => {
-                    console.error(message);
-                });
-            };
-
-            document.body.appendChild(script);
-        }
-
-        InitUnitySection();
 
     </script>
 
