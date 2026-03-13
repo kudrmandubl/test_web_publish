@@ -74,9 +74,9 @@
         script.onload = () => {
 
             createUnityInstance(canvas, config, (progress) => {
-                let pr = (progress * 3.2) * 100;
+                let pr = progress * 100;
                 if (pr > 100) pr = 100;
-                let rounded = Math.round(pr / 5) * 5;
+                let rounded = Math.round(pr);
 
                 document.getElementById("loader-fill").style.width = pr + "%";
                 document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
