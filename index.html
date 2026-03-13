@@ -13,9 +13,7 @@
 <body>
 
     <div id="unity-container">
-        <img src="left.jpg" id="left-img" class="side-image">
-        <canvas id="unity-canvas" tabindex="-1"></canvas>
-        <img src="right.jpg" id="right-img" class="side-image">
+        <canvas id="unity-canvas"></canvas>
         <div id="loader">
             <div id="loader-wrapper">
                 <div id="loader-track">
@@ -51,15 +49,15 @@
         }
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/playables_test.loader.js";
+        const loaderUrl = buildUrl + "/fish_story_1.6.47_ytp.loader.js";
         const config = {
-            dataUrl: buildUrl + "/playables_test.data",
-            frameworkUrl: buildUrl + "/playables_test.framework.js",
-            codeUrl: buildUrl + "/playables_test.wasm",
+            dataUrl: buildUrl + "/fish_story_1.6.47_ytp.data.unityweb",
+            frameworkUrl: buildUrl + "/fish_story_1.6.47_ytp.framework.js.unityweb",
+            codeUrl: buildUrl + "/fish_story_1.6.47_ytp.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
-            companyName: "DefaultCompany",
-            productName: "playables_test",
-            productVersion: "1.0",
+            companyName: "Joybits",
+            productName: "Fish Story",
+            productVersion: "1.6.47",
         };
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -70,36 +68,10 @@
             //config.devicePixelRatio = 1;
         }
 
-        function resizeCanvasToAspect() {
-            const aspect = 3 / 4;
-            const windowWidth = window.innerWidth;
-            const windowHeight = window.innerHeight;
-
-            let newWidth = windowWidth;
-            let newHeight = windowHeight;
-
-            if (windowWidth / windowHeight > aspect) {
-                newWidth = windowWidth;
-                newHeight = newWidth / aspect;
-
-                if (newHeight > windowHeight) {
-                    newHeight = windowHeight;
-                    newWidth = newHeight * aspect;
-                }
-            }
-
-            container.style.width = newWidth + "px";
-            container.style.height = newHeight + "px";
-        }
-
-        window.addEventListener('resize', resizeCanvasToAspect);
-        resizeCanvasToAspect();
-
         const script = document.createElement("script");
         var unityGameInstance = null;
         script.src = loaderUrl;
         script.onload = () => {
-            canvas.style.background = "transparent";
 
             createUnityInstance(canvas, config, (progress) => {
                 let pr = (progress * 3.2) * 100;
@@ -111,7 +83,6 @@
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
-                document.getElementById("unity-container").style.backgroundImage = "none";
             }).catch((message) => {
                 alert(message);
             });

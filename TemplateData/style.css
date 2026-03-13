@@ -1,54 +1,49 @@
 ﻿
 <style >
 
+html {
+	box-sizing: border-box;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
 html, body {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	width: 100%;
 	height: 100%;
-	background: #007bff;
-	position: relative;
-	user-select: none;
+}
+
+canvas {
+	display: block;
+}
+
+body {
+	margin: 0;
 }
 
 #unity-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background: transparent;
-	z-index: 2;
-	background-image: url('loading-bg.jpg');
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background-color: #1A1A1A;
+	background-image: url('bg.jpg');
 	background-size: cover;
 	background-position: center;
 }
 
 #unity-canvas {
-	display: block;
-	width: 100%;
-	height: 100%;
-	background: #007bff;
-}
-
-.side-image {
 	position: absolute;
 	top: 50%;
-	transform: translateY(-50%);
-	height: 100vh;
-	object-fit: contain;
-	z-index: 1;
-	pointer-events: none;
-}
-
-#left-img {
-	right: 100%; /* стоит слева от канваса */
-	margin-right: 0px;
-}
-
-#right-img {
-	left: 100%; /* стоит справа от канваса */
-	margin-left: 0px;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: min(calc(100vh * (9/16)), 100vw);
+	max-width: 100%;
+	max-height: 100%;
+	height: auto;
+	aspect-ratio: 9/16;
+	display: block;
+	background-image: url('loading-bg.jpg');
+	background-size: cover;
+	background-position: center;
 }
 
 #loader {
