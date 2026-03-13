@@ -75,6 +75,7 @@
 
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
+                if (pr >= 90) pr += 1;
                 if (pr > 100) pr = 100;
                 let rounded = Math.round(pr);
 
