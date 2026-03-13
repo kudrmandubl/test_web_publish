@@ -76,15 +76,7 @@
             let fakeProgress = 0;
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
-                if (pr >= 90 && fakeProgress == 0) {
-                    fakeProgress = pr;
-                }
-                else if (fakeProgress >= 90) {
-                    fakeProgress++;
-                    pr = fakeProgress;
-                }
-
-                if (pr > 100) pr = 100;
+                if (pr >= 90) pr = 100;
                 let rounded = Math.round(pr);
 
                 document.getElementById("loader-fill").style.width = pr + "%";
