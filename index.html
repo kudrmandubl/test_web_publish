@@ -73,7 +73,6 @@
         script.src = loaderUrl;
         script.onload = () => {
 
-            let fakeProgress = 0;
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
                 if (pr >= 90) pr = 100;
