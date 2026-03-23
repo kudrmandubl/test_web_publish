@@ -49,15 +49,15 @@
         }
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/fish_story_1.6.50_ytp.loader.js";
+        const loaderUrl = buildUrl + "/fish_story_1.6.51_ytp.loader.js";
         const config = {
-            dataUrl: buildUrl + "/fish_story_1.6.50_ytp.data.unityweb",
-            frameworkUrl: buildUrl + "/fish_story_1.6.50_ytp.framework.js.unityweb",
-            codeUrl: buildUrl + "/fish_story_1.6.50_ytp.wasm.unityweb",
+            dataUrl: buildUrl + "/fish_story_1.6.51_ytp.data.unityweb",
+            frameworkUrl: buildUrl + "/fish_story_1.6.51_ytp.framework.js.unityweb",
+            codeUrl: buildUrl + "/fish_story_1.6.51_ytp.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Joybits",
             productName: "Fish Story",
-            productVersion: "1.6.50",
+            productVersion: "1.6.51",
         };
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -95,20 +95,8 @@
         //configD2D.currentLevel = 2;
         //configD2D.trackingAvailability = true;
         //configD2D.logLevel = "Error";
-        configD2D.applicationVersion = "1.6.50";
+        configD2D.applicationVersion = "1.6.51";
         analytics.initialize('6c9f880f-febd-049f-b434-b140965ff2de', configD2D);
-
-        window.__dtdSafeCustomEvent = function (name, params) {
-            console.warn("[dtd] send event " + name)
-            window.devtodev.customEvent(name, params);
-            console.warn("[dtd] after send event " + name)
-            try {
-                if (window.devtodev && typeof window.devtodev.customEvent === "function") {
-                }
-            } catch (e) {
-                console && console.warn && console.warn("[dtd] customEvent failed", e);
-            }
-        };
 
     </script>
 
