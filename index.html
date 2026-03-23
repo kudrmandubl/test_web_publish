@@ -99,7 +99,9 @@
         analytics.initialize('6c9f880f-febd-049f-b434-b140965ff2de', configD2D);
 
         window.__dtdSafeCustomEvent = function (name, params) {
-                    window.devtodev.customEvent(name, params);
+            console.warn("[dtd] send event " + name)
+            window.devtodev.customEvent(name, params);
+            console.warn("[dtd] after send event " + name)
             try {
                 if (window.devtodev && typeof window.devtodev.customEvent === "function") {
                 }
