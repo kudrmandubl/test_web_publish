@@ -70,59 +70,46 @@
         const script = document.createElement("script");
         var unityGameInstance = null;
         script.src = loaderUrl;
-
-        let filling = false; // флаг, чтобы запускать заполнение только один раз
-        let fillStartTime = null;
-        const fillDuration = 2 * 1000; // N секунд в миллисекундах
-        let realLoadingStopValue = 90;
-        const animationFrameDelay = 32; // примерно 30 кадров в секунду
-
-        const animateFill = () => {
-            if (!filling) return;
-
-            const elapsed = performance.now() - fillStartTime;
-            const fillProgress = Math.min(elapsed / fillDuration, 1);
-            let pr = realLoadingStopValue + fillProgress * (100 - realLoadingStopValue);
-            console.warn("elapsed = " + elapsed + " fillProgress = " + fillProgress + " pr = " + pr);
-            if (fillProgress >= 1) {
-                pr = 100;
-                filling = false; // остановить анимацию
-                console.warn("stop filling");
-                alert("stop filling");
-            }
-
-            // Обновляем прогрессбар и текст
-            setProgress(pr);
-
-            if (filling) {
-                setTimeout(animateFill, animationFrameDelay);
-            }
-        };
-
-        const setProgress = (pr) => {
-            let rounded = Math.round(pr);
-            document.getElementById("loader-fill").style.width = pr + "%";
-            document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
-        }
-
         script.onload = () => {
+
+            let filling = false; // флаг, чтобы запускать заполнение только один раз
+            let fillStartTime = null;
+            const fillDuration = 2 * 1000; // N секунд в миллисекундах
+            let realLoadingStopValue = 90;
+
+            const animateFill = () => {
+                if (!filling) return;
+
+                const elapsed = performance.now() - fillStartTime;
+                const fillProgress = Math.min(elapsed / fillDuration, 1);
+                let pr = realLoadingStopValue + fillProgress * 10;
+
+                if (fillProgress >= 1) {
+                    pr = 100;
+                    filling = false; // остановить анимацию
+                }
+
+                // Обновляем прогрессбар и текст
+                setProgress(pr);
+
+                if (filling) {
+                    requestAnimationFrame(animateFill);
+                }
+            };
+
+            const setProgress = (pr) => {
+                let rounded = Math.round(pr);
+                document.getElementById("loader-fill").style.width = pr + "%";
+                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
+            }
 
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
-                if (pr >= realLoadingStopValue && !filling) {
-                    // Запускаем заполнение с realLoadingStopValue до 100
-                    filling = true;
-                    fillStartTime = performance.now();
-                    animateFill.call(window);
-                }
-                else {
-                    setProgress(pr);
-                }
 
+                setProgress(pr);
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
-                console.warn("stop loading");
             }).catch((message) => {
                 alert(message);
             });
