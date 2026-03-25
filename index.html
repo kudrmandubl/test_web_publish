@@ -83,7 +83,6 @@
                 const elapsed = performance.now() - fillStartTime;
                 const fillProgress = Math.min(elapsed / fillDuration, 1);
                 let pr = realLoadingStopValue + fillProgress * (100 - realLoadingStopValue);
-                alert(elapsed);
                 if (fillProgress >= 1) {
                     pr = 100;
                     filling = false; // остановить анимацию\
@@ -111,8 +110,10 @@
                     fillStartTime = performance.now();
                     animateFill();
                 }
+                else {
+                    setProgress(pr);
+                }
 
-                setProgress(pr);
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
