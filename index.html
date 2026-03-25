@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Fish Story</title>
   <link rel="stylesheet" href="TemplateData/style.css">
-
+    
+  <script src="https://cdn.devtodev.com/sdk/web/v3/devtodevsdk.js"></script>
   <script>
     const overlayBackgroundColor = "";
     const progressBarFillColor = "";
@@ -43,20 +44,22 @@
 </head>
 
 <body class="dark">
-  <div id="unity-container" class="unity-desktop">
-    <canvas id="unity-canvas"></canvas>
-  </div>
-  <div id="loading-cover" style="display:none;">
-    <div id="unity-loading-bar">
-      <div id="unity-logo"><img src="logo.png"></div>
-      <div id="unity-progress-bar-empty" style="display: none;">
-        <div id="unity-progress-bar-full"></div>
-      </div>
-      <div class="spinner"></div>
-    </div>
-  </div>
 
-  <script>
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+        <div id="loader">
+            <div id="loader-wrapper">
+                <div id="loader-track">
+                    <div id="loader-track-inner">
+                        <div id="loader-fill"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader-text">Loading&nbsp;0%</div>
+        </div>
+    </div>
+
+    <script>
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/fish_story_1.6.52_ytp.loader.js";
     const config = {
@@ -78,30 +81,9 @@
 
     const container = document.querySelector("#unity-container");
     const canvas = document.querySelector("#unity-canvas");
-    const loadingCover = document.querySelector("#loading-cover");
-    const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-    const progressBarFull = document.querySelector("#unity-progress-bar-full");
-    const spinner = document.querySelector('.spinner');
-
-    if (overlayBackgroundColor !== " " && overlayBackgroundColor !== ""){
-      canvas.style.background = overlayBackgroundColor;
-    }
-
-    if (progressBarFillColor !== " " && progressBarFillColor !== ""){
-      progressBarFull.style.background = progressBarFillColor;
-    }
-
-    if (progressBarBackgroundColor !== " " && progressBarBackgroundColor !== ""){
-      progressBarEmpty.style.background = progressBarBackgroundColor;
-    }
-
-    if (progressBarBorderColor !== " " && progressBarBorderColor !== ""){
-      progressBarEmpty.style.border.color = progressBarBorderColor;
-    }
-
-    if (backgroundFileName !== " " && backgroundFileName !== ""){
-      canvas.style.background = "url('" + backgroundFileName + "') center / cover";
-    }
+    const loader = document.querySelector("#loader");
+    const loaderFill = document.querySelector("#loader-fill");
+    const loaderText = document.querySelector("#loader-text");
 
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
       container.className = "unity-mobile";
@@ -111,7 +93,7 @@
     // canvas.style.background = "url('" + buildUrl + "/') center / cover";
     // #endif
 
-    loadingCover.style.display = "";
+    loader.style.display = "";
 
         // Выключаем появление меню при правом клике мыши
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -133,12 +115,15 @@
     unityLoader.src = loaderUrl;
     unityLoader.onload = async () => {
       createUnityInstance(canvas, config, (progress) => {
-        spinner.style.display = "none";
-        progressBarEmpty.style.display = "";
-        progressBarFull.style.width = `${100 * progress}%`;
+        let pr = progress * 100;
+        if (pr >= 90) pr = 100;
+        let rounded = Math.round(pr);
+
+        loaderFill.style.width = pr + "%";
+        loaderText.textContent = "Loading " + rounded + "%";
       }).then((unityInstance) => {
         window.unityInstance = unityInstance;
-        loadingCover.style.display = "none";
+        loader.style.display = "none";
       }).catch((message) => {
         alert(message);
       });
@@ -150,8 +135,17 @@
       window.focus();
       canvas.focus();
     });
+    
+    const analytics = window.devtodev;
+    const configD2D = {};
+    //configD2D.userId = "Unique user identifier";
+    //configD2D.currentLevel = 2;
+    //configD2D.trackingAvailability = true;
+    //configD2D.logLevel = "Error";
+    configD2D.applicationVersion = "1.6.52";
+    analytics.initialize('6c9f880f-febd-049f-b434-b140965ff2de', configD2D);
 
-  </script>
+    </script>
 </body>
 
 </html>
