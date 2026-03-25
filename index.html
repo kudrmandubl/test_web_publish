@@ -77,25 +77,42 @@
             const fillDuration = 2 * 1000; // N секунд в миллисекундах
             let realLoadingStopValue = 90;
 
+            const animateFill = () => {
+                if (!filling) return;
+
+                const elapsed = performance.now() - fillStartTime;
+                const fillProgress = Math.min(elapsed / fillDuration, 1);
+                let pr = realLoadingStopValue + fillProgress * 10;
+
+                if (fillProgress >= 1) {
+                    pr = 100;
+                    filling = false; // остановить анимацию
+                }
+
+                // Обновляем прогрессбар и текст
+                setProgress(pr);
+
+                if (filling) {
+                    requestAnimationFrame(animateFill);
+                }
+            };
+
+            const setProgress = (pr) => {
+                let rounded = Math.round(pr);
+                document.getElementById("loader-fill").style.width = pr + "%";
+                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
+            }
+
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
                 if (pr >= realLoadingStopValue && !filling) {
                     // Запускаем заполнение с realLoadingStopValue до 100
                     filling = true;
                     fillStartTime = performance.now();
-                } if (filling) {
-                    const elapsed = performance.now() - fillStartTime;
-                    let fillProgress = Math.min(elapsed / fillDuration, 1); // интерполяция от 0 до 1
-                    pr = realLoadingStopValue + fillProgress * (100 - realLoadingStopValue); // добавляем к realLoadingStopValue% прогресс
-                    if (fillProgress >= 1) {
-                        pr = 100;
-                    }
-                } 
+                    animateFill();
+                }
 
-                let rounded = Math.round(pr);
-
-                document.getElementById("loader-fill").style.width = pr + "%";
-                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
+                setProgress(pr);
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
