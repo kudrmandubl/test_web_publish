@@ -75,6 +75,7 @@
         let fillStartTime = null;
         const fillDuration = 2 * 1000; // N секунд в миллисекундах
         let realLoadingStopValue = 90;
+        const animationFrameDelay = 32; // примерно 30 кадров в секунду
 
         const animateFill = () => {
             if (!filling) return;
@@ -86,15 +87,15 @@
             if (fillProgress >= 1) {
                 pr = 100;
                 filling = false; // остановить анимацию
-                alert("stop filling");
                 console.warn("stop filling");
+                alert("stop filling");
             }
 
             // Обновляем прогрессбар и текст
             setProgress(pr);
 
             if (filling) {
-                requestAnimationFrame(animateFill);
+                setTimeout(animateFill, animationFrameDelay);
             }
         };
 
