@@ -86,6 +86,8 @@
             if (fillProgress >= 1) {
                 pr = 100;
                 filling = false; // остановить анимацию
+                alert("stop filling");
+                console.warn("stop filling");
             }
 
             // Обновляем прогрессбар и текст
@@ -119,6 +121,7 @@
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
                 document.getElementById("loader").style.display = "none";
+                console.warn("stop loading");
             }).catch((message) => {
                 alert(message);
             });
