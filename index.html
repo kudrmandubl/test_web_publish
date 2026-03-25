@@ -82,12 +82,11 @@
 
                 const elapsed = performance.now() - fillStartTime;
                 const fillProgress = Math.min(elapsed / fillDuration, 1);
-                let pr = realLoadingStopValue + fillProgress * 10;
-
+                let pr = realLoadingStopValue + fillProgress * (100 - realLoadingStopValue);
+                alert(elapsed);
                 if (fillProgress >= 1) {
                     pr = 100;
-                    filling = false; // остановить анимацию
-                    alert("stop filling");
+                    filling = false; // остановить анимацию\
                 }
 
                 // Обновляем прогрессбар и текст
