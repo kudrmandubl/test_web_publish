@@ -110,7 +110,7 @@
                     // Запускаем заполнение с realLoadingStopValue до 100
                     filling = true;
                     fillStartTime = performance.now();
-                    animateFill();
+                    animateFill.call(window);
                 }
                 else {
                     setProgress(pr);
