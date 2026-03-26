@@ -1,49 +1,15 @@
 ﻿<!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Fish Story</title>
-  <link rel="stylesheet" href="TemplateData/style.css">
-    
-  <script src="https://cdn.devtodev.com/sdk/web/v3/devtodevsdk.js"></script>
-  <script>
-    const overlayBackgroundColor = "";
-    const progressBarFillColor = "";
-    const progressBarBackgroundColor = "";
-    const progressBarBorderColor = "";
-    const backgroundFileName = "";
-  </script>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<style>
-  /* Убираем выделение по нажатию клавиш */
-  canvas:focus {
-      outline: none;
-  }
-
-  html, body {
-      /* Убираем отступы */
-      padding: 0;
-      margin: 0;
-      /* Отключаем скролл и лонгтап на IOS */
-      overflow: hidden;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: rgba(0,0,0,0);
-      /* Ставим высоту на 100% */
-      height: 100%;
-  }
-</style>
-
+    <title>Fish Story</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
 </head>
-
-<body class="dark">
+<body>
 
     <div id="unity-container">
         <canvas id="unity-canvas"></canvas>
@@ -60,92 +26,69 @@
     </div>
 
     <script>
-    const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/fish_story_1.6.52_ytp.loader.js";
-    const config = {
-      dataUrl: buildUrl + "/fish_story_1.6.52_ytp.data.unityweb",
-      workerUrl: buildUrl + "/fish_story_1.6.52_ytp.data.unityweb",
-      frameworkUrl: buildUrl + "/fish_story_1.6.52_ytp.framework.js.unityweb",
-      codeUrl: buildUrl + "/fish_story_1.6.52_ytp.wasm.unityweb",
-      // #if MEMORY_FILENAME
-      //   memoryUrl: buildUrl + "/",
-      // #endif
-      // #if SYMBOLS_FILENAME
-      //   symbolsUrl: buildUrl + "/",
-      // #endif
-      streamingAssetsUrl: "StreamingAssets",
-      companyName: "Joybits",
-      productName: "Fish Story",
-      productVersion: "1.6.52",
-    };
+        const canvas = document.getElementById("unity-canvas");
+        const container = document.getElementById("unity-container");
 
-    const container = document.querySelector("#unity-container");
-    const canvas = document.querySelector("#unity-canvas");
-    const loader = document.querySelector("#loader");
-    const loaderFill = document.querySelector("#loader-fill");
-    const loaderText = document.querySelector("#loader-text");
-
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-      container.className = "unity-mobile";
-    }
-
-    // #if BACKGROUND_FILENAME
-    // canvas.style.background = "url('" + buildUrl + "/') center / cover";
-    // #endif
-
-    loader.style.display = "";
-
-        // Выключаем появление меню при правом клике мыши
-        document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // Возвращаем фокус, если кликнули по экрану
-        function FocusGame() {
-            window.focus();
-            canvas.focus();
+        function unityShowBanner(msg, type) {
+            // function updateBannerVisibility() {
+            //   warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+            // }
+            // var div = document.createElement('div');
+            // div.innerHTML = msg;
+            // warningBanner.appendChild(div);
+            // if (type == 'error') div.style = 'background: red; padding: 10px;';
+            // else {
+            //   if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+            //   setTimeout(function() {
+            //     warningBanner.removeChild(div);
+            //     updateBannerVisibility();
+            //   }, 5000);
+            // }
+            // updateBannerVisibility();
         }
 
-        window.addEventListener('pointerdown', () => {
-            FocusGame();
-        });
-        window.addEventListener('touchstart', () => {
-            FocusGame();
-        });
+        const buildUrl = "Build";
+        const loaderUrl = buildUrl + "/fish_story_1.6.54_gp.loader.js";
+        const config = {
+            dataUrl: buildUrl + "/fish_story_1.6.54_gp.data.unityweb",
+            frameworkUrl: buildUrl + "/fish_story_1.6.54_gp.framework.js.unityweb",
+            codeUrl: buildUrl + "/fish_story_1.6.54_gp.wasm.unityweb",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "Joybits",
+            productName: "Fish Story",
+            productVersion: "1.6.54",
+        };
 
-    const unityLoader = document.createElement("script");
-    unityLoader.src = loaderUrl;
-    unityLoader.onload = async () => {
-      createUnityInstance(canvas, config, (progress) => {
-        let pr = progress * 100;
-        if (pr >= 90) pr = 100;
-        let rounded = Math.round(pr);
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            const meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.head.appendChild(meta);
+            //config.devicePixelRatio = 1;
+        }
 
-        loaderFill.style.width = pr + "%";
-        loaderText.textContent = "Loading " + rounded + "%";
-      }).then((unityInstance) => {
-        window.unityInstance = unityInstance;
-        loader.style.display = "none";
-      }).catch((message) => {
-        alert(message);
-      });
-    };
-    document.body.appendChild(unityLoader);
+        const script = document.createElement("script");
+        var unityGameInstance = null;
+        script.src = loaderUrl;
+        script.onload = () => {
 
-    document.addEventListener("pointerdown", () => {
-      container.focus();
-      window.focus();
-      canvas.focus();
-    });
-    
-    const analytics = window.devtodev;
-    const configD2D = {};
-    //configD2D.userId = "Unique user identifier";
-    //configD2D.currentLevel = 2;
-    //configD2D.trackingAvailability = true;
-    //configD2D.logLevel = "Error";
-    configD2D.applicationVersion = "1.6.52";
-    analytics.initialize('6c9f880f-febd-049f-b434-b140965ff2de', configD2D);
+            createUnityInstance(canvas, config, (progress) => {
+                let pr = progress * 100;
+                if (pr >= 90) pr = 100;
+                let rounded = Math.round(pr);
+
+                document.getElementById("loader-fill").style.width = pr + "%";
+                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
+            }).then((unityInstance) => {
+                unityGameInstance = unityInstance;
+                document.getElementById("loader").style.display = "none";
+            }).catch((message) => {
+                alert(message);
+            });
+        };
+        document.body.appendChild(script);
 
     </script>
-</body>
 
+</body>
 </html>
