@@ -8,6 +8,7 @@
 
     <title>Fish Story</title>
     <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="https://cdn.devtodev.com/sdk/web/v3/devtodevsdk.js"></script>
 </head>
 <body>
 
@@ -48,15 +49,15 @@
         }
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/fish_story_1.6.54_gp.loader.js";
+        const loaderUrl = buildUrl + "/fish_story_1.6.55_gp.loader.js";
         const config = {
-            dataUrl: buildUrl + "/fish_story_1.6.54_gp.data.unityweb",
-            frameworkUrl: buildUrl + "/fish_story_1.6.54_gp.framework.js.unityweb",
-            codeUrl: buildUrl + "/fish_story_1.6.54_gp.wasm.unityweb",
+            dataUrl: buildUrl + "/fish_story_1.6.55_gp.data.unityweb",
+            frameworkUrl: buildUrl + "/fish_story_1.6.55_gp.framework.js.unityweb",
+            codeUrl: buildUrl + "/fish_story_1.6.55_gp.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Joybits",
             productName: "Fish Story",
-            productVersion: "1.6.54",
+            productVersion: "1.6.55",
         };
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -87,6 +88,15 @@
             });
         };
         document.body.appendChild(script);
+
+        const analytics = window.devtodev;
+        const configD2D = {};
+        //configD2D.userId = "Unique user identifier";
+        //configD2D.currentLevel = 2;
+        //configD2D.trackingAvailability = true;
+        //configD2D.logLevel = "Error";
+        configD2D.applicationVersion = "1.6.55";
+        analytics.initialize('6c9f880f-febd-049f-b434-b140965ff2de', configD2D);
 
     </script>
 
