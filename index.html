@@ -51,30 +51,23 @@
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
 
-            // Условие: если высота больше ширины, растянуть по высоте
-            if (windowHeight > windowWidth) {
-                // Расчет ширины и высоты
-                const aspectRatio = 3 / 4; // соотношение сторон
-                const newHeight = windowHeight;
-                const newWidth = newHeight * aspectRatio;
+            // Расчет ширины и высоты
+            const sourceAspectRatio = 3 / 4; // соотношение сторон
+            const windowAspectRatio = windowWidth / windowHeight;
+            const targetAspectRatio = 0;
 
-                // Ограничение максимальной шириной
-                if (newWidth > windowWidth) {
-                    // Если ширина превышает окно, уменьшаем высоту
-                    const adjustedWidth = windowWidth;
-                    const adjustedHeight = adjustedWidth / aspectRatio;
-                    canvas.style.width = `${adjustedWidth}px`;
-                    canvas.style.height = `${adjustedHeight}px`;
-                } else {
-                    canvas.style.width = `${newWidth}px`;
-                    canvas.style.height = `${newHeight}px`;
-                }
-            } else {
-                // Иначе оставить как есть или задать по умолчанию
-                // Например, полностью заполнять окно
-                canvas.style.width = '100vw';
-                canvas.style.height = 'auto'; // или '100vh' в зависимости от ситуации
+            // если экран вытянутый по вертикали - растягиваем на весь экран
+            if (windowAspectRatio < sourceAspectRatio) {
+                targetAspectRatio = windowAspectRatio;
             }
+            // если по горизонтали - держим соотношение 3/4
+            else {
+                targetAspectRatio = sourceAspectRatio;
+            }
+
+            canvas.style.aspectRatio = targetAspectRatio;
+            const calculatedWidth = Math.min(windowHeight * targetAspectRatio, windowWidth);
+            canvas.style.width = calculatedWidth;
         }
 
         // Повешиваем обработчик события изменения размера окна
