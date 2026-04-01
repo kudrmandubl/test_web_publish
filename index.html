@@ -54,7 +54,7 @@
             // Расчет ширины и высоты
             const sourceAspectRatio = 3 / 4; // соотношение сторон
             const windowAspectRatio = windowWidth / windowHeight;
-            const targetAspectRatio = 0;
+            let targetAspectRatio = 0;
 
             // если экран вытянутый по вертикали - растягиваем на весь экран
             if (windowAspectRatio < sourceAspectRatio) {
