@@ -48,15 +48,15 @@
         }
 
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/fish_story_1.6.55_gp.loader.js";
+        const loaderUrl = buildUrl + "/fish_test.loader.js";
         const config = {
-            dataUrl: buildUrl + "/fish_story_1.6.55_gp.data.unityweb",
-            frameworkUrl: buildUrl + "/fish_story_1.6.55_gp.framework.js.unityweb",
-            codeUrl: buildUrl + "/fish_story_1.6.55_gp.wasm.unityweb",
+            dataUrl: buildUrl + "/fish_test.data.unityweb",
+            frameworkUrl: buildUrl + "/fish_test.framework.js.unityweb",
+            codeUrl: buildUrl + "/fish_test.wasm.unityweb",
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Joybits",
             productName: "Fish Story",
-            productVersion: "1.6.55",
+            productVersion: "1.6.54",
         };
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -72,52 +72,16 @@
         script.src = loaderUrl;
         script.onload = () => {
 
-            let filling = false; // флаг, чтобы запускать заполнение только один раз
-            let fillStartTime = null;
-            const fillDuration = 5 * 1000; // N секунд в миллисекундах
-            let realLoadingStopValue = 90;
-
-            const animateFill = () => {
-                if (!filling) return;
-
-                const elapsed = performance.now() - fillStartTime;
-                const fillProgress = Math.min(elapsed / fillDuration, 1);
-                let pr = realLoadingStopValue + fillProgress * 10;
-
-                if (fillProgress >= 1) {
-                    pr = 100;
-                    filling = false; // остановить анимацию
-                }
-
-                // Обновляем прогрессбар и текст
-                setProgress(pr);
-
-                if (filling) {
-                    requestAnimationFrame(animateFill);
-                }
-            };
-
-            const setProgress = (pr) => {
-                let rounded = Math.round(pr);
-                document.getElementById("loader-fill").style.width = pr + "%";
-                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
-            }
-
             createUnityInstance(canvas, config, (progress) => {
                 let pr = progress * 100;
-                if (pr >= realLoadingStopValue && !filling) {
-                    // Запускаем заполнение с realLoadingStopValue до 100
-                    filling = true;
-                    fillStartTime = performance.now();
-                    animateFill();
-                }
+                if (pr >= 90) pr = 100;
+                let rounded = Math.round(pr);
 
-                setProgress(pr);
-
+                document.getElementById("loader-fill").style.width = pr + "%";
+                document.getElementById("loader-text").textContent = "Loading " + rounded + "%";
             }).then((unityInstance) => {
                 unityGameInstance = unityInstance;
-                // now call from game
-                //document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.display = "none";
             }).catch((message) => {
                 alert(message);
             });
